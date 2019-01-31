@@ -28,7 +28,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
-    vcsRoot(SettingsRoot)
+    vcsRoot(PetclinicVcs)
     buildType(Build)
 }
 
@@ -37,7 +37,7 @@ object Build: BuildType({
     artifactRules = "target/*jar"
 
     vcs {
-        root(SettingsRoot)
+        root(PetclinicVcs)
     }
     steps {
         maven {
@@ -49,7 +49,7 @@ object Build: BuildType({
     }
 })
 
-object SettingsRoot : GitVcsRoot({
-    name = "SettingsRoot"
+object PetclinicVcs : GitVcsRoot({
+    name = "PetclinicVcs"
     url = "https://github.com/spring-projects/spring-petclinic.git"
 })
