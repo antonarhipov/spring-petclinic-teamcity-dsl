@@ -1,5 +1,7 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -26,27 +28,32 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
+    vcsRoot(SettingsRoot)
 
-    buildType(ProjectA)
-    buildType(ProjectB)
+    buildType(Build)
 }
 
-object ProjectA : BuildType({
-    name = "ProjectA"
-})
+object Build: BuildType({
+    name = "Build"
 
-object ProjectB : BuildType({
-    name = "ProjectB"
+    artifactRules = "target/*jar"
+
+    vcs {
+        root(SettingsRoot)
+    }
+
+    steps {
+        maven {
+            goals = "clean package"
+        }
+    }
 
     triggers {
-        vcs {
-            branchFilter = ""
-            watchChangesInDependencies = true
-        }
+        vcs { }
     }
+})
 
-    dependencies {
-        snapshot(ProjectA) {
-        }
-    }
+object SettingsRoot : GitVcsRoot({
+    name = "SettingsRoot"
+    url = "https://github.com/spring-projects/spring-petclinic.git"
 })
