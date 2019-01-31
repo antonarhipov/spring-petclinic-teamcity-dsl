@@ -29,27 +29,23 @@ version = "2018.2"
 
 project {
     vcsRoot(SettingsRoot)
-
     buildType(Build)
 }
 
 object Build: BuildType({
     name = "Build"
-
     artifactRules = "target/*jar"
 
     vcs {
         root(SettingsRoot)
     }
-
     steps {
         maven {
             goals = "clean package"
         }
     }
-
     triggers {
-//        vcs { }
+        vcs { }
     }
 })
 
