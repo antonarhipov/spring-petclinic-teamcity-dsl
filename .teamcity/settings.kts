@@ -27,10 +27,13 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 
 version = "2018.2"
 
-project {
+project(Petclinic)
+
+object Petclinic: Project({
+    name = "Spring Petclinic"
     vcsRoot(SettingsRoot)
     buildType(Build)
-}
+})
 
 object Build: BuildType({
     name = "Build"
