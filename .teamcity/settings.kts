@@ -49,7 +49,7 @@ object Build: BuildType({
     }
 
     triggers {
-        vcs { }
+//        vcs { }
     }
 })
 
