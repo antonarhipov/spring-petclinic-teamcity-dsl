@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.CheckoutMode
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
@@ -40,6 +41,12 @@ object Build : BuildType({
 
     vcs {
         root(PetclinicVcs)
+        checkoutMode = CheckoutMode.ON_AGENT
+        checkoutDir = "sources"
+        cleanCheckout = true
+        showDependenciesChanges = true
+        excludeDefaultBranchChanges = true
+        buildDefaultBranch = true
     }
     steps {
         maven {
