@@ -1,8 +1,10 @@
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
+import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
+import jetbrains.buildServer.configs.kotlin.v2018_2.Project
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
+import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -29,13 +31,13 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
-    val vcsRoot = GitVcsRoot {
+    val vcsRoot = git {
         id("PetclinicVcs")
         name = "PetclinicVcs"
         url = "https://github.com/spring-projects/spring-petclinic.git"
     }
 
-    buildType {
+    configuration {
         id("Build")
         name = "Build"
         artifactRules = "target/*jar"
@@ -75,3 +77,6 @@ project {
 //    name = "PetclinicVcs"
 //    url = "https://github.com/spring-projects/spring-petclinic.git"
 //})
+
+fun Project.configuration(bt: BuildType.() -> Unit) = buildType(bt)
+fun Project.git(vcs: GitVcsRoot.()->Unit) = GitVcsRoot(vcs)

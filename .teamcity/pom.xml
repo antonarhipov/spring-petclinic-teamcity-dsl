@@ -36,7 +36,7 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <build>
+  <configuration>
     <sourceDirectory>.</sourceDirectory>
     <plugins>
       <plugin>
@@ -72,7 +72,7 @@
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </configuration>
 
   <dependencies>
     <dependency>
