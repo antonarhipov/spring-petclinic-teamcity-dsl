@@ -42,11 +42,11 @@ object Build : BuildType({
     vcs {
         root(PetclinicVcs)
         checkoutMode = CheckoutMode.ON_AGENT
-        checkoutDir = "sources"
-        cleanCheckout = true
-        showDependenciesChanges = true
-        excludeDefaultBranchChanges = true
-        buildDefaultBranch = true
+//        checkoutDir = "sources"
+//        cleanCheckout = true
+//        showDependenciesChanges = true
+//        excludeDefaultBranchChanges = true
+//        buildDefaultBranch = true
     }
     steps {
         maven {
