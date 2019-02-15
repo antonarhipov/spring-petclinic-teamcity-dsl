@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
@@ -28,28 +29,49 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2018.2"
 
 project {
-    vcsRoot(PetclinicVcs)
-    buildType(Build)
-}
-
-object Build: BuildType({
-    name = "Build"
-    artifactRules = "target/*jar"
-
-    vcs {
-        root(PetclinicVcs)
+    val vcsRoot = GitVcsRoot {
+        id("PetclinicVcs")
+        name = "PetclinicVcs"
+        url = "https://github.com/spring-projects/spring-petclinic.git"
     }
-    steps {
-        maven {
-            goals = "clean package"
+
+    buildType {
+        id("Build")
+        name = "Build"
+        artifactRules = "target/*jar"
+
+        vcs {
+            root(vcsRoot)
+        }
+        steps {
+            maven {
+                goals = "clean package"
+            }
+        }
+        triggers {
+            vcs { }
         }
     }
-    triggers {
-        vcs { }
-    }
-})
+}
 
-object PetclinicVcs : GitVcsRoot({
-    name = "PetclinicVcs"
-    url = "https://github.com/spring-projects/spring-petclinic.git"
-})
+//object Build: BuildType({
+//    name = "Build"
+//    artifactRules = "target/*jar"
+//
+//    vcs {
+//        root(PetclinicVcs)
+//    }
+//    steps {
+//        maven {
+//            goals = "clean package"
+//        }
+//    }
+//    triggers {
+//        vcs { }
+//    }
+//})
+//
+//object PetclinicVcs : GitVcsRoot({
+//    name = "PetclinicVcs"
+//    url = "https://github.com/spring-projects/spring-petclinic.git"
+//})
