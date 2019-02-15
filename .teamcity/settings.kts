@@ -1,10 +1,9 @@
-import jetbrains.buildServer.configs.kotlin.v2018_2.BuildType
-import jetbrains.buildServer.configs.kotlin.v2018_2.CheckoutMode
+import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.Swabra
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures.swabra
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.v2018_2.project
 import jetbrains.buildServer.configs.kotlin.v2018_2.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.v2018_2.vcs.GitVcsRoot
-import jetbrains.buildServer.configs.kotlin.v2018_2.version
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -41,12 +40,6 @@ object Build : BuildType({
 
     vcs {
         root(PetclinicVcs)
-        checkoutMode = CheckoutMode.ON_AGENT
-        checkoutDir = "sources"
-        cleanCheckout = true
-        showDependenciesChanges = true
-        excludeDefaultBranchChanges = true
-        buildDefaultBranch = true
     }
     steps {
         maven {
@@ -62,3 +55,10 @@ object PetclinicVcs : GitVcsRoot({
     name = "PetclinicVcs"
     url = "https://github.com/spring-projects/spring-petclinic.git"
 })
+
+fun wrapWithFeature(buildType: BuildType, featureBlock: BuildFeatures.() -> Unit): BuildType {
+    buildType.features {
+        featureBlock()
+    }
+    return buildType
+}
