@@ -44,10 +44,13 @@ object Build : BuildType({
     steps {
         maven {
             goals = "clean package"
+            dockerImage = "maven:3.6.0-jdk-8"
         }
     }
     triggers {
-        vcs { }
+        vcs {
+            groupCheckinsByCommitter = true
+        }
     }
 })
 
@@ -55,6 +58,7 @@ object PetclinicVcs : GitVcsRoot({
     name = "PetclinicVcs"
     url = "https://github.com/spring-projects/spring-petclinic.git"
 })
+
 
 fun wrapWithFeature(buildType: BuildType, featureBlock: BuildFeatures.() -> Unit): BuildType {
     buildType.features {
